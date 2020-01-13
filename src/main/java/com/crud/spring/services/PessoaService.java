@@ -36,7 +36,7 @@ public class PessoaService{
 	
 	public Optional<Pessoa> listarId(int id) {
 		
-		return null;
+		return dataRepository.findById(id);
 	}
 
 	

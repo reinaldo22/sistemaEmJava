@@ -15,35 +15,35 @@
 			<form th:action="@{/save}" th:object=${pessoa} method="POST">
 
 				<div class="card">
-					
+
 					<div class="card-header">
 						<h3>Modelo de Pessoa</h3>
 					</div>
-					
+
 					<div class="card-body">
 						<div class="form-group">
-						<label>ID</label>
-						<input th:field="*{id}" type="text" class="form-control"/>
-						</div>	
-						
+							<label>ID</label> <input th:field="*{id}" type="text"
+								class="form-control" />
+						</div>
+
 						<div class="form-group">
-						<label>NOMES</label>
-						<input th:field="*{nome}" type="text" class="form-control"/>
-						</div>	
-						
+							<label>NOMES</label> <input th:field="*{nome}" type="text"
+								class="form-control" />
+						</div>
+
 						<div class="form-group">
-						<label>TELEFONE</label>
-						<input th:field="*{telefone}" type="text" class="form-control"/>
-						</div>	
+							<label>TELEFONE</label> <input th:field="*{telefone}" type="text"
+								class="form-control" />
+						</div>
 					</div>
-					
+
 					<div class="card-footer">
-					<input type="submit" value="Guardar" class="btn btn-success"/>
+						<input type="submit" value="Guardar" class="btn btn-success" />
 					</div>
 				</div>
 
 			</form>
-			
+
 		</div>
 	</div>
 </body>
