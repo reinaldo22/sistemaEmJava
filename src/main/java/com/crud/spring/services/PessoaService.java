@@ -41,6 +41,7 @@ public class PessoaService{
 
 	
 	public void delete(int id) {
+		dataRepository.deleteById(id);
 		
 		
 	}

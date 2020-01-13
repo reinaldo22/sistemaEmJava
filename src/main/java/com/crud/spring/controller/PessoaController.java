@@ -56,4 +56,11 @@ public class PessoaController {
 		
 		return "form";
 	}
+	
+	@GetMapping("/excluir/{id}")
+	public String deletar(Model model, @PathVariable int id) {
+		pservice.delete(id);
+		return "redirect:/listar";
+	}
+	
 }

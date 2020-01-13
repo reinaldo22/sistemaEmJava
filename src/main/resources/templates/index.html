@@ -10,9 +10,8 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<a th:href="@{/new}" class="btn btn-primary">Novo</a>
-		<br>
-		
+		<a th:href="@{/new}" class="btn btn-primary">Novo</a> <br>
+
 		<table class="table">
 			<thead>
 				<tr>
@@ -22,20 +21,27 @@
 					<td>OPÇÕES</td>
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				<tr th:each="pessoa:${pessoas}">
 					<td th:text="${pessoa.id}"></td>
 					<td th:text="${pessoa.nome}"></td>
 					<td th:text="${pessoa.telefone}"></td>
-					<td><a th:href="@{/editar/}+${pessoa.id}" class="btn btn-warning">Editar</a> 
-					<a class="btn btn-danger">Excluir</a></td>
-					
-					
-					
+					<td><a th:href="@{/editar/}+${pessoa.id}"
+						class="btn btn-warning">Editar</a> <a
+						th:onclick="eliminar([[${pessoa.id}]])" class="btn btn-danger">Excluir</a></td>
+
+
+
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="funcoes.js"></script>
 </body>
 </html>
