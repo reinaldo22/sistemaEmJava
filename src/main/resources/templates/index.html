@@ -1,47 +1,31 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html >
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container mt-4">
-		<a th:href="@{/new}" class="btn btn-primary">Novo</a> <br>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<td>ID</td>
-					<td>NOMES</td>
-					<td>TELEFONE</td>
-					<td>OPÇÕES</td>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr th:each="pessoa:${pessoas}">
-					<td th:text="${pessoa.id}"></td>
-					<td th:text="${pessoa.nome}"></td>
-					<td th:text="${pessoa.telefone}"></td>
-					<td><a th:href="@{/editar/}+${pessoa.id}"
-						class="btn btn-warning">Editar</a> <a
-						th:onclick="eliminar([[${pessoa.id}]])" class="btn btn-danger">Excluir</a></td>
-
-
-
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<script>
 	
-	<script src="https://code.jquery.com/jquery-3.4.1.js"
-		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-		crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="funcoes.js"></script>
+	$(document).ready(
+		
+			function(){
+				$.ajax({
+					url: "http://localhost:8080/usuario/",
+					method:"GET"
+				}).then(function (data,status, info ){
+					console.log(info);
+				});
+			}
+	);
+
+</script>
+
+
 </body>
 </html>
