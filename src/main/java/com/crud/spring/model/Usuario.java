@@ -99,6 +99,15 @@ public class Usuario implements UserDetails {
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
+	
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	/* Autorizações do usuário */
 	@JsonIgnore

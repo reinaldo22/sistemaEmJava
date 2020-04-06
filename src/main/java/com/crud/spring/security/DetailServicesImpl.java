@@ -1,4 +1,4 @@
-package com.crud.spring.services;
+package com.crud.spring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -11,8 +11,7 @@ import com.crud.spring.model.Usuario;
 import com.crud.spring.repository.UsuarioRepository;
 
 @Service
-public class DetailServicesImpl implements UserDetailsService {
-
+public class DetailServicesImpl implements UserDetailsService{
 	@Autowired
 	private UsuarioRepository userRepo;
 
@@ -29,5 +28,4 @@ public class DetailServicesImpl implements UserDetailsService {
 				usuario.getPassword(),
 				usuario.getAuthorities());
 	}
-
 }

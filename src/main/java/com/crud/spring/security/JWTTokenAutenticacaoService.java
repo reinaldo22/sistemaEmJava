@@ -1,4 +1,5 @@
 package com.crud.spring.security;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -16,10 +17,6 @@ import com.crud.spring.repository.UsuarioRepository;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
-
-/*Primeira classe a ser implementada do jwt*/
-/*Gera o token e implementa validações*/
 
 @Service
 @Component
@@ -60,7 +57,7 @@ public class JWTTokenAutenticacaoService {
 	
 	
 	/* Retorna o usuário validado com o token ou não seja válido retorna nulo */
-	public Authentication getAuthentication(HttpServletRequest request) {
+	public Authentication getAuthentication(HttpServletRequest request,  HttpServletResponse response) {
 		
 		/* Pega o token enviado no cabeçalho http */
 		String token = request.getHeader(HEADER_STRING);
@@ -73,12 +70,10 @@ public class JWTTokenAutenticacaoService {
 			
 			if(user !=null ) {
 				
-				Usuario usuario = ApplicationContextLoad
-						.getApplicationContext()
-						.getBean(UsuarioRepository.class)
-						.findUserByLogin(user);
+				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class).findUserByLogin(user);
 				
-				System.out.println(usuario);
+				System.out.println(">>>>>>"+ usuario);
+				
 				if(usuario != null) { /*Vai retornar o usuário para validar por token */
 					return new UsernamePasswordAuthenticationToken(
 							usuario.getLogin(),

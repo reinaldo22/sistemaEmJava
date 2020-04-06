@@ -3,11 +3,12 @@ package com.crud.spring;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 import org.springframework.context.ApplicationContext;
 
 /*Classe que sobe todas as classes dos meus pacotes e acessa tudo*/
 
-
+@Component
 public class ApplicationContextLoad implements ApplicationContextAware {
 
 	@Autowired

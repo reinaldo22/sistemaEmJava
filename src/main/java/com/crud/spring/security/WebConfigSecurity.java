@@ -10,15 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.util.AntPathMatcher;
 
-import com.crud.spring.services.DetailServicesImpl;
-
-/*Mapeia url, enderecos, autoriza ou bloqueia acessos ´para a url*/
 
 @Configuration
 @EnableWebSecurity
-public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
+public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private DetailServicesImpl detailservice;
