@@ -45,13 +45,17 @@ public class JWTTokenAutenticacaoService {
 				.signWith(SignatureAlgorithm.HS256, SECRET).compact();/* Compactação e algoritmo de geração do token */
 		
 		/* Junta o token com o prefixo */
-		String token = TOKEN_PREFIX + "" + JWT; /* Bearer */
+		String token = TOKEN_PREFIX + " " + JWT; /* Bearer */
 		
 		/*Adiciona no cabeçalho HTTP */
 		response.addHeader(HEADER_STRING, token);/*Authorization: Bearer 7878787878 */
 		
+		/*Liberando resposta para porta diferente do projeto Angular*/
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		
+		
 		/*Escreve token como resposta no corpo do HTTP */
-		response.getWriter().write("{\"Authorization\": \""+token+"\"}");
+		response.getWriter().write("{\"Authorization\": \""+ token+ "\"}");
 		
 		}
 	
@@ -86,6 +90,8 @@ public class JWTTokenAutenticacaoService {
 			}
 			
 		}
+		/*Liberando resposta para porta diferente do projeto Angular*/
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		return null;
 	}
 
