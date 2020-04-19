@@ -30,6 +30,7 @@ public class IndexController {
 	private UsuarioRepository usuarioRepository;
 
 	@GetMapping(value = "/{id}", produces = "application/json")
+	@CachePut("cacheusuarios")
 	public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
 
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
@@ -46,10 +47,10 @@ public class IndexController {
 		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping(value = "/buscaNome/{nome}", produces = "application/json")
 	@CachePut("cacheusuarios")
-	public ResponseEntity<List<Usuario>> findNome(@PathVariable("nome") String  nome) throws InterruptedException {
+	public ResponseEntity<List<Usuario>> findNome(@PathVariable("nome") String nome) throws InterruptedException {
 
 		List<Usuario> list = (List<Usuario>) usuarioRepository.findUserByNome(nome);
 
@@ -78,6 +79,13 @@ public class IndexController {
 		for (int i = 0; i < usuario.getTelefones().size(); i++) {
 			usuario.getTelefones().get(i).setUsuarios(usuario);
 		}
+
+		Usuario userTemporario = usuarioRepository.findById(usuario.getId()).get();
+		if (!userTemporario.getSenha().equals(usuario.getSenha())) {/* senhas diferentes */
+			String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			usuario.setSenha(senhacriptografada);
+		}
+
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 		return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
 	}
