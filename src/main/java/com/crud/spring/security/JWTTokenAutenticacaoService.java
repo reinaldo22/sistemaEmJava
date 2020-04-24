@@ -75,7 +75,7 @@ public class JWTTokenAutenticacaoService {
 				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
 						.findUserByLogin(user);
 
-				System.out.println(">>>>>>" + usuario);
+				
 
 				if (usuario != null) { /* Vai retornar o usuário para validar por token */
 					return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
