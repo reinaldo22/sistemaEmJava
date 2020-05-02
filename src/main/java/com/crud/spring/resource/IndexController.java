@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.spring.model.Usuario;
+import com.crud.spring.repository.TelefoneRepository;
 import com.crud.spring.repository.UsuarioRepository;
+import com.crud.spring.service.ImplementacaoUserDetailService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -28,6 +30,12 @@ public class IndexController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private ImplementacaoUserDetailService userDetailService;
+
+	@Autowired
+	private TelefoneRepository telefoneRepo;
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	@CachePut("cacheusuarios")
@@ -70,6 +78,7 @@ public class IndexController {
 		usuario.setSenha(senhacriptografada);
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
+		userDetailService.insereAcessoPadrao(usuarioSalvo.getId());
 		return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
 
 	}
@@ -96,6 +105,14 @@ public class IndexController {
 		usuarioRepository.deleteById(id);
 
 		return "Excluído com sucesso!";
+	}
+
+	@DeleteMapping(value = "/removeTelefone/{id}", produces = "application/text")
+	public String deletaTelefone(@PathVariable("id") Long id) {
+
+		telefoneRepo.deleteById(id);
+
+		return "ok";
 	}
 
 }
