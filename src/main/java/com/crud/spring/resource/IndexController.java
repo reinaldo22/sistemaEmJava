@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,23 +51,48 @@ public class IndexController {
 
 	@GetMapping(value = "/", produces = "application/json")
 	@CachePut("cacheusuarios")
-	public ResponseEntity<List<Usuario>> get() throws InterruptedException {
+	public ResponseEntity<Page<Usuario>> get() throws InterruptedException {
 
-		List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
+		PageRequest page = PageRequest.of(0, 5, Sort.by("nome"));
+		Page<Usuario> list = usuarioRepository.findAll(page);
 
-		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+
+	}
+
+	@GetMapping(value = "/page/{pagina}", produces = "application/json")
+	@CachePut("cacheusuarios")
+	public ResponseEntity<Page<Usuario>> usuarioPage(@PathVariable("pagina") int pagina) throws InterruptedException {
+
+		PageRequest page = PageRequest.of(pagina, 5, Sort.by("nome"));
+		Page<Usuario> list = usuarioRepository.findAll(page);
+
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 
 	}
 
 	@GetMapping(value = "/buscaNome/{nome}", produces = "application/json")
 	@CachePut("cacheusuarios")
-	public ResponseEntity<List<Usuario>> findNome(@PathVariable("nome") String nome) throws InterruptedException {
+	public ResponseEntity<Page<Usuario>> findNome(@PathVariable("nome") String nome) throws InterruptedException {
 
-		List<Usuario> list = (List<Usuario>) usuarioRepository.findUserByNome(nome);
+		PageRequest pageRequest = null;
+		Page<Usuario> list = null;
 
-		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+		if (nome == null || (nome != null && nome.trim().isEmpty()) || nome.equalsIgnoreCase("undefined")) {
+			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
+			list = usuarioRepository.findAll(pageRequest);
+		}else {
+			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
+			list = usuarioRepository.findUserByNamePage(nome, pageRequest);
+		}
+		
+		
+
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 
 	}
+
+
 
 	@PostMapping(value = "/", produces = "application/json")
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
