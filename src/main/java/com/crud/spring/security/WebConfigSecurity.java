@@ -12,10 +12,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Configuration
 @EnableWebSecurity
-public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
+public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DetailServicesImpl detailservice;
@@ -27,10 +26,10 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 
 				/* ativando restricoes url */
-				.disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("index").permitAll()
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				
-				
+				.disable().authorizeRequests().antMatchers("/").permitAll()
+				.antMatchers("index", "/recuperar/**")
+				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
 				/* URL de logout - Redirciona após o usuario deslogar do sistema */
 				.anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
 				/* Mapeia URL de Logout e invalida o usuario */

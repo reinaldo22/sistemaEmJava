@@ -26,6 +26,10 @@ public class CrudSpringApplication implements  WebMvcConfigurer{
 		registry.addMapping("/profissao/**")
 		.allowedMethods("*")
 		.allowedOrigins("*");
+		
+		registry.addMapping("/recuperar/**")
+		.allowedMethods("*")
+		.allowedOrigins("*");
 		/*Liberando o mapeamento de usuario para todas as origins*/
 	}
 
