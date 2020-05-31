@@ -45,7 +45,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
+	
+		<!--dependencia para o banco de dados-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -62,31 +63,35 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<!--dependencia para segurança da api, impementar no final da aplicacao-->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<!-- <version>5.0.7.RELEASE</version> -->
 		</dependency>
-
+		
+		<!--dependencia para segurança da api, impementar no final da aplicacao-->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<!-- <version>5.0.7.RELEASE</version> -->
 		</dependency>
 
+		<!--dependencia para o jwt token-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
 
+		<!--não lembro rsrsrs...-->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<!-- <version>3.3.1</version> -->
 		</dependency>
-
+		
+		<!--dependencia para guardar o cache da api-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
@@ -95,12 +100,19 @@
 		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>javax.mail-api</artifactId> 
 			<version>1.6.0</version> </dependency> -->
 
+		<!--dependencia para envio de email-->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.0</version>
 		</dependency>
 
+		<!--dependencia para o jasper-->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.8.0</version>
+		</dependency>
 
 	</dependencies>
 	<build>
