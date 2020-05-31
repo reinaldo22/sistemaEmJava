@@ -1,8 +1,10 @@
 package com.crud.spring.resource;
 
-
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import com.crud.spring.model.Usuario;
 import com.crud.spring.repository.TelefoneRepository;
 import com.crud.spring.repository.UsuarioRepository;
 import com.crud.spring.service.ImplementacaoUserDetailService;
+import com.crud.spring.service.RelatorioService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -39,6 +42,9 @@ public class IndexController {
 
 	@Autowired
 	private TelefoneRepository telefoneRepo;
+
+	@Autowired
+	private RelatorioService relatorioService;
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	@CachePut("cacheusuarios")
@@ -81,18 +87,14 @@ public class IndexController {
 		if (nome == null || (nome != null && nome.trim().isEmpty()) || nome.equalsIgnoreCase("undefined")) {
 			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
 			list = usuarioRepository.findAll(pageRequest);
-		}else {
+		} else {
 			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
 			list = usuarioRepository.findUserByNamePage(nome, pageRequest);
 		}
-		
-		
 
 		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 
 	}
-
-
 
 	@PostMapping(value = "/", produces = "application/json")
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
@@ -141,6 +143,17 @@ public class IndexController {
 		telefoneRepo.deleteById(id);
 
 		return "ok";
+	}
+
+	@GetMapping(value = "/relatorio", produces = "application/text")
+	public ResponseEntity<String> donwloadRelatorio(HttpServletRequest request) throws Exception {
+
+		byte[] pdf = relatorioService.gerarRelatorio("documento", request.getServletContext());
+
+		String base64Pdf = "data:application/pdf;base64," + Base64.encodeBase64String(pdf);
+
+		return new ResponseEntity<String>(base64Pdf, HttpStatus.OK);
+
 	}
 
 }

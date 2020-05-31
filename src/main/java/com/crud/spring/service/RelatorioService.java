@@ -29,12 +29,17 @@ public class RelatorioService implements Serializable {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 
 		/* Carrega o caminho do arquivo Jasper */
-		String caminhoJasper = serveletContext.getRealPath("com.crud.spring.relatorios") + File.separator
+		String caminhoJasper = serveletContext.getRealPath("relatorios") + File.separator
 				+ nomeRelatorio + ".jasper";
-
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+caminhoJasper);
 		/* Gerar o relatorio com os dados e conexao */
 		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, new HashMap(), connection);
 
-		return JasperExportManager.exportReportToPdf(print);
+		byte[] retorno = JasperExportManager.exportReportToPdf(print);
+
+		connection.close();
+
+		return retorno;
 	}
 }
