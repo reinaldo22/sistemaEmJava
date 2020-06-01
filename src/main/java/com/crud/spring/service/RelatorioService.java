@@ -28,11 +28,14 @@ public class RelatorioService implements Serializable {
 		/* Obtem a conexao com o banco de dados */
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 
+		String caminho = new File("relatorios").getCanonicalPath();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+caminho);
+		
 		/* Carrega o caminho do arquivo Jasper */
 		String caminhoJasper = serveletContext.getRealPath("relatorios") + File.separator
 				+ nomeRelatorio + ".jasper";
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+caminhoJasper);
+		
 		/* Gerar o relatorio com os dados e conexao */
 		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, new HashMap(), connection);
 
