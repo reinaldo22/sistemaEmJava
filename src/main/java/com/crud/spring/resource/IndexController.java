@@ -1,5 +1,6 @@
 package com.crud.spring.resource;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +47,9 @@ public class IndexController {
 
 	@Autowired
 	private RelatorioService relatorioService;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@GetMapping(value = "/{id}", produces = "application/json")
 	@CachePut("cacheusuarios")
@@ -154,6 +159,23 @@ public class IndexController {
 
 		return new ResponseEntity<String>(base64Pdf, HttpStatus.OK);
 
+	}
+
+	@GetMapping(value = "/grafico", produces = "application/json")
+	public ResponseEntity<UserChart> grafico() {
+		UserChart userChat = new UserChart();
+
+		List<String> resultado = jdbcTemplate.queryForList("select array_agg('''' || nome || '''') from usuario where salario > 0 and nome <> '' union all select cast(array_agg(salario) as character varying[]) from usuario where salario > 0 and nome <> ''", String.class);
+
+		if (!resultado.isEmpty()) {
+			String nomes = resultado.get(0).replaceAll("\\{", "").replaceAll("\\}", "");
+			String salario = resultado.get(1).replaceAll("\\{", "").replaceAll("\\}", "");
+
+			userChat.setNome(nomes);
+			userChat.setSalario(salario);
+		}
+
+		return new ResponseEntity<UserChart>(userChat, HttpStatus.OK);
 	}
 
 }
