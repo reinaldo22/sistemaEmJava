@@ -8,7 +8,6 @@ import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-	private String username = "email";
+	private String username = "email da empresa ou do dono do sistema";
 	private String password = "senha";
 
 	public void enviarEmail(String assunto, String emailDestino, String mensagem) throws Exception {

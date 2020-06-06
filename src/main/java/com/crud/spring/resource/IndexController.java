@@ -165,7 +165,7 @@ public class IndexController {
 	public ResponseEntity<UserChart> grafico() {
 		UserChart userChat = new UserChart();
 
-		List<String> resultado = jdbcTemplate.queryForList("select array_agg('''' || nome || '''') from usuario where salario > 0 and nome <> '' union all select cast(array_agg(salario) as character varying[]) from usuario where salario > 0 and nome <> ''", String.class);
+		List<String> resultado = jdbcTemplate.queryForList("select array_agg( nome ) from usuario where salario > 0 and nome <> '' union all select cast(array_agg(salario) as character varying[]) from usuario where salario > 0 and nome <> ''", String.class);
 
 		if (!resultado.isEmpty()) {
 			String nomes = resultado.get(0).replaceAll("\\{", "").replaceAll("\\}", "");
